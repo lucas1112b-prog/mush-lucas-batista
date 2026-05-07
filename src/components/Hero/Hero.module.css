@@ -1,0 +1,79 @@
+.hero {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f4f4;
+  /* Cor do globals.css */
+}
+
+.hero canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Texto invisível mas presente para SEO */
+.accessibilityText {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.borderOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+  border: 12px solid rgb(131, 221, 184);
+  filter: blur(12px);
+  animation: borderGlow 1s linear infinite alternate;
+  border-radius: 4rem;
+}
+
+@keyframes borderGlow {
+  0% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.logo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 38px;
+  display: flex;
+  align-items: center;
+  background-color: var(--accent-1);
+  padding: 3rem 2rem;
+  padding-top: 2.3rem;
+  z-index: 150;
+  /* Fica acima da animação e do overlay */
+  border-radius: 0 0 50% 50%;
+}
+
+.logo svg {
+  height: 2.4rem;
+  width: auto;
+}

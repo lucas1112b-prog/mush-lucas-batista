@@ -1,0 +1,151 @@
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.curtain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(131, 221, 184); /* Fundo verde */
+  z-index: -1;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  
+  /* Otimizações e Estado Inicial */
+  will-change: transform, border-radius;
+  transform: translateY(0%) translateZ(0);
+  backface-visibility: hidden;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  opacity: 1; /* Estado inicial */
+}
+
+.logoContainer {
+  position: relative;
+  width: 250px;
+  /* Tamanho menor para a logo */
+  height: auto;
+  aspect-ratio: 415 / 205;
+  /* Proporção do SVG */
+}
+
+.logoBase {
+  width: 100%;
+  height: 100%;
+  color: white;
+  opacity: 0.3;
+  /* Base mais apagada */
+}
+
+.logoFillContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  /* Cresce com o GSAP */
+  overflow: hidden;
+}
+
+.logoFilled {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  color: white;
+  /* Cor da logo preenchida */
+}
+
+.feedbackContainer {
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.feedbackText {
+  position: absolute;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+  opacity: 0.8;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  white-space: nowrap;
+}
+
+.feedbackText.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+.startBtn {
+  position: absolute;
+  padding: 0.8rem 2.5rem;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgb(131, 221, 184);
+  /* Cor do texto no botão */
+  background-color: #ffffff;
+  border: none;
+  border-radius: 4000px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease, scale 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.startBtn.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.letterContainer {
+  display: flex;
+  overflow: hidden;
+  height: 1.1em;
+  line-height: 1.1em;
+  text-shadow: 0 1.1em 0 rgb(131, 221, 184);
+}
+
+.letter {
+  --duration: 0.44s;
+  display: block;
+  backface-visibility: hidden;
+  font-style: normal;
+  transition: transform var(--duration) ease;
+  transition-delay: calc(var(--index) * 0.03s);
+  transform: translateY(0) translateZ(0);
+}
+
+.startBtn:hover .letter {
+  transform: translateY(-1.1em) translateZ(0);
+}

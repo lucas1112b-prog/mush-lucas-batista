@@ -1,0 +1,49 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background: transparent;
+}
+
+.heroWrapper {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  z-index: 1; /* Garante que fique atrás do About1 (z-index: 30) */
+}
+
+.canvasContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.backgroundText {
+  position: absolute;
+  z-index: 1;
+  font-size: 15vw;
+  font-weight: 900;
+  color: #f0f0f0;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.noiseOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/noise.gif');
+  background-repeat: repeat;
+  background-size: contain;
+  z-index: 100; /* No topo de tudo, mas invisível a cliques */
+  pointer-events: none;
+  /* Garante que o ruído não bloqueie cliques */
+  opacity: 0.02;
+  /* Valor sutil para o efeito de grão */
+}
