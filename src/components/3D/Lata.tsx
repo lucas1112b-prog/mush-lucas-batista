@@ -20,7 +20,7 @@ type GLTFResult = GLTF & {
 }
 
 export function Lata(props: React.JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('/lata-nova7.glb?v=2') as GLTFResult
+  const { nodes, materials } = useGLTF('/lata-nova7.glb?v=2') as unknown as GLTFResult
 
   useLayoutEffect(() => {
     Object.values(materials).forEach((material) => {
