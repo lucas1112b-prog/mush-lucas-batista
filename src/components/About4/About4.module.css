@@ -1,0 +1,52 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2f4f48b;
+  backdrop-filter: blur(16px);
+  padding: 0 5vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 10;
+  position: relative;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-size: 3rem;
+  font-weight: 600;
+  color: #000000c4;
+  margin: 0;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  text-align: center;
+  max-width: 80%;
+}
+
+.highlight {
+  font-weight: 600;
+}
+
+/* O conteúdo de texto precisa ficar por cima */
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+    max-width: 100%;
+  }
+}

@@ -5,6 +5,7 @@
   background: transparent;
   display: flex;
   z-index: 31;
+  padding: 3rem;
   /* Maior que o About 1 */
 }
 
@@ -43,6 +44,7 @@
   gap: 1rem;
   padding: 1rem;
   padding-top: 0;
+  padding-bottom: 4rem;
 }
 
 .title {

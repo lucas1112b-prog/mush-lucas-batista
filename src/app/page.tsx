@@ -11,6 +11,7 @@ import Hero from "@/components/Hero/Hero";
 import About1 from "@/components/About1/About1";
 import About2 from "@/components/About2/About2";
 import About3 from "@/components/About3/About3";
+import About4 from "@/components/About4/About4";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -21,6 +22,7 @@ export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null)
   const about1Ref = useRef<HTMLDivElement>(null)
   const about2Ref = useRef<HTMLDivElement>(null)
+  const about3Ref = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     // Inicializar Lenis
@@ -39,9 +41,9 @@ export default function Home() {
     ScrollTrigger.create({
       trigger: heroRef.current,
       start: 'top top',
-      end: '+=100%', 
+      end: '+=100%',
       pin: true,
-      pinSpacing: false, 
+      pinSpacing: false,
     })
 
     // Efeito de Fade e Blur no Hero quando o About1 sobe
@@ -61,9 +63,9 @@ export default function Home() {
     ScrollTrigger.create({
       trigger: about1Ref.current,
       start: 'top top',
-      end: '+=100%', 
+      end: '+=100%',
       pin: true,
-      pinSpacing: false, 
+      pinSpacing: false,
     })
 
     // Efeito de Fade e Blur no About1 quando o About2 sobe
@@ -83,9 +85,9 @@ export default function Home() {
     ScrollTrigger.create({
       trigger: about2Ref.current,
       start: 'top top',
-      end: '+=100%', 
+      end: '+=100%',
       pin: true,
-      pinSpacing: false, 
+      pinSpacing: false,
     })
 
     // Fade/Blur do About2 quando o About3 sobe
@@ -101,6 +103,28 @@ export default function Home() {
       }
     })
 
+    // Pin do About3
+    ScrollTrigger.create({
+      trigger: about3Ref.current,
+      start: 'top top',
+      end: '+=100%',
+      pin: true,
+      pinSpacing: false,
+    })
+
+    // Fade/Blur do About3 quando o About4 sobe
+    gsap.to(about3Ref.current, {
+      opacity: 0,
+      filter: 'blur(8px)',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#about4-section',
+        start: 'top 95%',
+        end: 'top 20%',
+        scrub: 1,
+      }
+    })
+
   }, { scope: container })
 
   return (
@@ -108,7 +132,7 @@ export default function Home() {
       <Header />
       {/* Camada de Ruído (Noise) */}
       <div className={styles.noiseOverlay} />
-      
+
       <div ref={heroRef} className={styles.heroWrapper}>
         <Hero />
       </div>
@@ -118,8 +142,11 @@ export default function Home() {
       <div ref={about2Ref} style={{ width: '100%', position: 'relative', zIndex: 20 }}>
         <About2 />
       </div>
-      <div style={{ width: '100%', position: 'relative', zIndex: 30 }}>
+      <div ref={about3Ref} style={{ width: '100%', position: 'relative', zIndex: 30 }}>
         <About3 />
+      </div>
+      <div style={{ width: '100%', position: 'relative', zIndex: 40 }}>
+        <About4 />
       </div>
     </main>
   );
