@@ -44,11 +44,11 @@ function InteractiveModel() {
       if (isDragging.current) {
         const deltaX = e.clientX - lastMousePos.current.x
         const deltaY = e.clientY - lastMousePos.current.y
-        
+
         // Movimento horizontal gira a lata em seu eixo Y, vertical no eixo X
         dragRotation.current.x += deltaY * 0.01
         dragRotation.current.y += deltaX * 0.01
-        
+
         lastMousePos.current = { x: e.clientX, y: e.clientY }
       }
     }
@@ -75,10 +75,10 @@ function InteractiveModel() {
         if (isDragging.current) {
           const deltaX = clientX - lastMousePos.current.x
           const deltaY = clientY - lastMousePos.current.y
-          
+
           dragRotation.current.x += deltaY * 0.01
           dragRotation.current.y += deltaX * 0.01
-          
+
           lastMousePos.current = { x: clientX, y: clientY }
         }
       }
@@ -91,10 +91,8 @@ function InteractiveModel() {
     window.addEventListener('touchend', handleTouchEnd)
     window.addEventListener('touchmove', handleTouchMove, { passive: true })
 
-    // Anima a posição X do grupo de scroll
-    gsap.to(scrollGroupRef.current.position, {
-      x: viewport.width * 0.10,
-      ease: 'none',
+    // Timeline para a animação do About 1
+    const tl1 = gsap.timeline({
       scrollTrigger: {
         trigger: '#about1-section',
         start: 'top 95%',
@@ -103,18 +101,22 @@ function InteractiveModel() {
       }
     })
 
-    gsap.to(scrollGroupRef.current.rotation, {
-      z: -0.2,
-      y: Math.PI * 0.8,
-      x: 0.1,
-      ease: 'none',
+    tl1.to(scrollGroupRef.current.position, { x: viewport.width * 0.10, ease: 'none' }, 0)
+      .to(scrollGroupRef.current.rotation, { z: -0.2, y: Math.PI * 0.8, x: 0.1, ease: 'none' }, 0)
+
+    // Timeline para a animação de retorno e shrink no About 3
+    const tl3 = gsap.timeline({
       scrollTrigger: {
-        trigger: '#about1-section',
+        trigger: '#about3-section',
         start: 'top 95%',
         end: 'top 20%',
         scrub: 1,
       }
     })
+
+    tl3.to(scrollGroupRef.current.position, { x: 0, ease: 'none' }, 0)
+      .to(scrollGroupRef.current.rotation, { z: 0, y: 0, x: 0, ease: 'none' }, 0)
+      .to(scrollGroupRef.current.scale, { x: 0.9, y: 0.9, z: 0.9, ease: 'none' }, 0)
 
     return () => {
       window.removeEventListener('mousedown', handleMouseDown)
@@ -144,7 +146,7 @@ function InteractiveModel() {
     mouseGroupRef.current.rotation.x = THREE.MathUtils.lerp(mouseGroupRef.current.rotation.x, targetRotationX, 0.10)
     mouseGroupRef.current.rotation.y = THREE.MathUtils.lerp(mouseGroupRef.current.rotation.y, targetRotationY, 0.10)
     mouseGroupRef.current.rotation.z = THREE.MathUtils.lerp(mouseGroupRef.current.rotation.z, targetRotationZ, 0.10)
-    
+
     // Renderiza a cena manualmente neste frame
     state.gl.render(state.scene, state.camera)
   }, 1)
