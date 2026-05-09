@@ -47,3 +47,24 @@
   opacity: 0.02;
   /* Valor sutil para o efeito de grão */
 }
+
+.about1Wrapper {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.about2Wrapper {
+  width: 100%;
+  position: relative;
+  z-index: 20;
+}
+
+@media (max-width: 768px) {
+  .about1Wrapper {
+    z-index: 998 !important;
+  }
+  .about2Wrapper {
+    z-index: 999 !important;
+  }
+}

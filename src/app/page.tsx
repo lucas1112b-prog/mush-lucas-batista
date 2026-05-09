@@ -136,10 +136,10 @@ export default function Home() {
       <div ref={heroRef} className={styles.heroWrapper}>
         <Hero />
       </div>
-      <div ref={about1Ref} style={{ width: '100%', position: 'relative', zIndex: 10 }}>
+      <div ref={about1Ref} className={styles.about1Wrapper}>
         <About1 />
       </div>
-      <div ref={about2Ref} style={{ width: '100%', position: 'relative', zIndex: 20 }}>
+      <div ref={about2Ref} className={styles.about2Wrapper}>
         <About2 />
       </div>
       <div ref={about3Ref} style={{ width: '100%', position: 'relative', zIndex: 30 }}>

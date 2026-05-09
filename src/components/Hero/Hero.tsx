@@ -20,12 +20,17 @@ export default function Hero() {
           <path d="M0 130.7H27.4865L40.7012 169.873L53.9158 130.7H74.0021L87.2168 169.873L100.431 130.7H126.861L101.911 204.682H76.5393L62.3732 162.759L48.2071 204.682H24.9493L0 130.7Z" fill="black"/>
         </svg>
       </div>
-      <LiquidCanvas />
+      <div className={styles.canvasWrapper}>
+        <LiquidCanvas />
+      </div>
       <div className={styles.borderOverlay} />
       {/* Texto invisível mas presente para SEO */}
       <div className={styles.accessibilityText}>
-        <h1>MUSH WATER</h1>
-        <h2>Upgrade your system. Beyond hydration.</h2>
+        <h1>PURE ENERGY</h1>
+        <h2>
+          <span className={styles.textGreen1}>Upgrade</span> your system.<br />
+          Beyond <span className={styles.textGreen2}>hydration</span>.
+        </h2>
       </div>
     </section>
   )

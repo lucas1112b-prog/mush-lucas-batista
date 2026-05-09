@@ -63,8 +63,20 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 0rem;
+  }
+
   .glassContent {
     width: 100%;
-    padding: 0 2rem;
+    padding: 2rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .description {
+    font-size: 0.95rem;
   }
 }
