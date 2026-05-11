@@ -9,7 +9,8 @@
   width: 100%;
   height: 100vh;
   position: relative;
-  z-index: 1; /* Garante que fique atrás do About1 (z-index: 30) */
+  z-index: 1;
+  /* Garante que fique atrás do About1 (z-index: 30) */
 }
 
 .canvasContainer {
@@ -41,7 +42,8 @@
   background-image: url('/noise.gif');
   background-repeat: repeat;
   background-size: contain;
-  z-index: 100; /* No topo de tudo, mas invisível a cliques */
+  z-index: 100;
+  /* No topo de tudo, mas invisível a cliques */
   pointer-events: none;
   /* Garante que o ruído não bloqueie cliques */
   opacity: 0.02;
@@ -60,11 +62,34 @@
   z-index: 20;
 }
 
+.about3Wrapper {
+  width: 100%;
+  position: relative;
+  z-index: 30;
+}
+
+.about4Wrapper {
+  width: 100%;
+  position: relative;
+  z-index: 40;
+  margin-top: 30vh;
+}
+
 @media (max-width: 768px) {
-  .about1Wrapper {
-    z-index: 998 !important;
+  .about3Wrapper {
+    z-index: 5 !important;
   }
+
+  .about1Wrapper {
+    z-index: 1000 !important;
+  }
+
   .about2Wrapper {
-    z-index: 999 !important;
+    z-index: 1001 !important;
+  }
+
+  .about4Wrapper {
+    z-index: 1002 !important;
+    margin-top: 100vh;
   }
 }

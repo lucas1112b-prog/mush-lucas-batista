@@ -61,7 +61,7 @@ export default function About3() {
     leftChars?.forEach((char) => {
       tl.to(char, {
         opacity: 1,
-        duration: 2,
+        duration: 1,
         ease: 'power2.inOut'
       }, Math.random() * 1)
     })
@@ -70,7 +70,7 @@ export default function About3() {
     rightChars?.forEach((char) => {
       tl.to(char, {
         opacity: 1,
-        duration: 2,
+        duration: 1,
         ease: 'power2.inOut'
       }, 1 + Math.random() * 1)
     })

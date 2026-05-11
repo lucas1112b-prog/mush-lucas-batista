@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import { Flip } from 'gsap/Flip'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+import { useGSAP } from '@gsap/react'
 import styles from './Header.module.css'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(Flip, ScrollToPlugin, useGSAP)
+}
 
 const gifList = [
   '/dance-gifs/Dance Dancing GIF.gif',
@@ -12,22 +19,98 @@ const gifList = [
 ]
 
 export default function Header() {
-  const NavLink = ({ href, children }: { href: string, children: string }) => (
-    <a href={href} className={styles.link}>
-      <div className={styles.letterContainer}>
-        {children.split('').map((char, i) => (
-          <span key={i} className={styles.letter} style={{ '--index': i } as React.CSSProperties}>
-            {char === ' ' ? '\u00A0' : char}
-          </span>
-        ))}
-      </div>
-    </a>
-  )
+  const navItems = [
+    { name: "Products", target: ".heroWrapper" },
+    { name: "About", target: "#about1-section" },
+    { name: "Contact", target: "#footer" }
+  ]
+
+  const [activeNav, setActiveNav] = useState("Products")
+  const navRef = useRef<HTMLElement>(null)
+  const linksRef = useRef<(HTMLAnchorElement | null)[]>([])
+  const markerRef = useRef<HTMLDivElement>(null)
+
+  // No mount, coloca o marker no primeiro link
+  useEffect(() => {
+    if (linksRef.current[0] && markerRef.current) {
+      linksRef.current[0].appendChild(markerRef.current)
+    }
+  }, [])
+
+  const handleNavClick = (e: React.MouseEvent, index: number, target: string) => {
+    e.preventDefault()
+    const clickedItem = navItems[index].name
+    if (clickedItem === activeNav) {
+      if (target) {
+        gsap.to(window, { duration: 1, scrollTo: target, ease: "power2.inOut" })
+      }
+      return
+    }
+
+    const marker = markerRef.current
+    const clickedLink = linksRef.current[index]
+
+    if (marker && clickedLink) {
+      // 1. Pega o estado
+      const state = Flip.getState(marker)
+
+      // 2. Muda no DOM
+      clickedLink.appendChild(marker)
+      setActiveNav(clickedItem)
+
+      // 3. Anima
+      Flip.from(state, {
+        duration: 0.4,
+        ease: "back",
+      })
+    }
+
+    // Scroll Suave
+    if (target) {
+      gsap.to(window, {
+        duration: 1,
+        scrollTo: target,
+        ease: "power2.inOut"
+      })
+    }
+  }
 
   const [isPlaying, setIsPlaying] = useState(false)
   const [volumeLevel, setVolumeLevel] = useState(5) // Inicia com 50% de volume
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const btnRef = useRef<HTMLButtonElement | null>(null)
+  const modalOverlayRef = useRef<HTMLDivElement>(null)
+  const modalContentRef = useRef<HTMLDivElement>(null)
+
+  useGSAP(() => {
+    if (isModalOpen && modalOverlayRef.current && modalContentRef.current) {
+      const tl = gsap.timeline()
+
+      tl.fromTo(modalOverlayRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, ease: 'power2.out' }
+      )
+
+      tl.fromTo(modalContentRef.current,
+        {
+          y: 40,
+          opacity: 0,
+          filter: 'blur(15px)',
+          scale: 0.95
+        },
+        {
+          y: 0,
+          opacity: 1,
+          filter: 'blur(0px)',
+          scale: 1,
+          duration: 0.7,
+          ease: 'power4.out'
+        },
+        "-=0.2"
+      )
+    }
+  }, [isModalOpen])
 
   // Análise de áudio
   const audioCtxRef = useRef<AudioContext | null>(null)
@@ -52,11 +135,11 @@ export default function Header() {
 
     const handleAutoStart = () => {
       if (!audio) return
-      
+
       // Inicia em volume baixo (nível 2 = 20%)
       setVolumeLevel(2)
       audio.volume = 0 // começa mudo para o fade in
-      
+
       audio.play().then(() => {
         setIsPlaying(true)
         // Precisamos chamar setupAudioAnalysis fora do fluxo do React caso o Contexto precise ser iniciado
@@ -64,7 +147,7 @@ export default function Header() {
         if (audioCtxRef.current && audioCtxRef.current.state === "suspended") {
           audioCtxRef.current.resume()
         }
-        
+
         // Simula o fade in manual usando o mesmo setInterval
         let vol = 0
         const fade = setInterval(() => {
@@ -250,10 +333,26 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <nav className={styles.nav}>
-        <NavLink href="#">Products</NavLink>
-        <NavLink href="#">About</NavLink>
-        <NavLink href="#">Contact</NavLink>
+      <nav className={styles.nav} ref={navRef}>
+        {navItems.map((item, index) => (
+          <a
+            key={item.name}
+            href={item.target}
+            ref={(el) => { linksRef.current[index] = el }}
+            className={`${styles.link} ${activeNav === item.name ? styles.active : ''}`}
+            onClick={(e) => handleNavClick(e, index, item.target)}
+          >
+            <div className={styles.letterContainer}>
+              {item.name.split('').map((char, i) => (
+                <span key={i} className={styles.letter} style={{ '--index': i } as React.CSSProperties}>
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))}
+            </div>
+          </a>
+        ))}
+        {/* Renderizado no nav, movido pro link via appendChild no mount e click */}
+        <div className={styles.marker} ref={markerRef} />
       </nav>
       <div className={styles.rightSection}>
         <button ref={btnRef} onClick={togglePlay} className={styles.playBtnCircle}>
@@ -281,10 +380,36 @@ export default function Header() {
           </div>
         </button>
 
-        <div className={styles.cart}>
-          Cart (0)
-        </div>
+        <button onClick={() => setIsModalOpen(true)} className={styles.buyBtn}>
+          <div className={styles.letterContainer}>
+            {"BUY".split('').map((char, i) => (
+              <span key={i} className={styles.letter} style={{ '--index': i } as React.CSSProperties}>
+                {char === ' ' ? '\u00A0' : char}
+              </span>
+            ))}
+          </div>
+        </button>
       </div>
+
+      {isModalOpen && (
+        <div ref={modalOverlayRef} className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
+          <div ref={modalContentRef} className={styles.modalContent} onClick={e => e.stopPropagation()}>
+            <h3>Website Concept</h3>
+            <p>
+              This website is a Concept created by <strong>Lucas Batista</strong> (@llucaslbatista). 
+              It is not a real store.
+            </p>
+            <div className={styles.modalActions}>
+              <a href="https://instagram.com/llucaslbatista" target="_blank" rel="noreferrer" className={styles.ctaBtn}>
+                Contact Me
+              </a>
+              <button className={styles.closeBtn} onClick={() => setIsModalOpen(false)}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   )
 }

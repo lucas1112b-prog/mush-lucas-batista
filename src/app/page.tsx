@@ -7,6 +7,7 @@ import { useGSAP } from '@gsap/react'
 import Lenis from 'lenis'
 import styles from "./page.module.css";
 import Header from "@/components/Header/Header";
+import MobileHeader from "@/components/MobileHeader/MobileHeader";
 import Hero from "@/components/Hero/Hero";
 import About1 from "@/components/About1/About1";
 import About2 from "@/components/About2/About2";
@@ -23,6 +24,7 @@ export default function Home() {
   const about1Ref = useRef<HTMLDivElement>(null)
   const about2Ref = useRef<HTMLDivElement>(null)
   const about3Ref = useRef<HTMLDivElement>(null)
+  const about4Ref = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     // Inicializar Lenis
@@ -107,7 +109,7 @@ export default function Home() {
     ScrollTrigger.create({
       trigger: about3Ref.current,
       start: 'top top',
-      end: '+=100%',
+      end: '+=200%',
       pin: true,
       pinSpacing: false,
     })
@@ -130,6 +132,7 @@ export default function Home() {
   return (
     <main className={styles.container} ref={container}>
       <Header />
+      <MobileHeader />
       {/* Camada de Ruído (Noise) */}
       <div className={styles.noiseOverlay} />
 
@@ -142,10 +145,10 @@ export default function Home() {
       <div ref={about2Ref} className={styles.about2Wrapper}>
         <About2 />
       </div>
-      <div ref={about3Ref} style={{ width: '100%', position: 'relative', zIndex: 30 }}>
+      <div ref={about3Ref} className={styles.about3Wrapper}>
         <About3 />
       </div>
-      <div style={{ width: '100%', position: 'relative', zIndex: 40 }}>
+      <div ref={about4Ref} className={styles.about4Wrapper}>
         <About4 />
       </div>
     </main>

@@ -41,7 +41,7 @@ export default function About4() {
     chars?.forEach((char) => {
       tl.to(char, {
         opacity: 1,
-        duration: 2,
+        duration: 1,
         ease: 'power2.inOut'
       }, Math.random() * 1.5)
     })
@@ -55,6 +55,17 @@ export default function About4() {
           <AnimatedText text="ELEVATING HYDRATION TO A " />
           <span className={styles.highlight}><AnimatedText text="NEW DIMENSION" /></span>
         </h2>
+        <p className={styles.signature}>
+          This Website Concept was created by{' '}
+          <a
+            href="https://instagram.com/llucaslbatista"
+            target="_blank"
+            rel="noreferrer"
+            className={styles.signatureLink}
+          >
+            <strong>Lucas Batista</strong> (@llucaslbatista)
+          </a>
+        </p>
       </div>
     </section>
   )

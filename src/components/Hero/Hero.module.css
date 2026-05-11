@@ -91,6 +91,7 @@
     padding: 2rem 1rem;
     padding-top: 1.5rem;
     height: auto;
+    display: none;
   }
 
   .logo svg {

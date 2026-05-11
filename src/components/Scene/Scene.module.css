@@ -4,6 +4,14 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 40; /* Fica acima da Hero e do About, mas abaixo do Header (50) */
-  pointer-events: none; /* Permite que cliques passem reto por ele */
+  /* z-index base — sobrescrito via .canvasContainer no page.module.css no mobile */
+  z-index: 40;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .canvasContainer {
+    /* Acima do About3 (z-index: 5) mas abaixo do About1 (1000) */
+    z-index: 999;
+  }
 }

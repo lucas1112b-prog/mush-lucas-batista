@@ -51,7 +51,7 @@ export default function Preloader() {
 
   const handleStart = contextSafe(() => {
     window.dispatchEvent(new CustomEvent('start-journey'))
-    
+
     const tl = gsap.timeline()
 
     tl.fromTo(contentRef.current,

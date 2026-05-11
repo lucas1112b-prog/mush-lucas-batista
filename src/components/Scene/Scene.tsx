@@ -146,7 +146,7 @@ function InteractiveModel() {
 
     // Usamos a nossa ref manual que pega o mouse de 'window' e adicionamos a rotação por drag
     const targetRotationX = mousePos.current.y * 0.5 + Math.sin(time * 0.5) * 0.1 + dragRotation.current.x
-    const targetRotationY = time * 0.3 + (mousePos.current.x * 0.5) + dragRotation.current.y
+    const targetRotationY = time * 0.6 + (mousePos.current.x * 0.5) + dragRotation.current.y
     const targetRotationZ = mousePos.current.x * 0.2
 
     // Dobramos o LERP de 0.05 para 0.10 porque o frame rate caiu pela metade, mantendo a mesma velocidade
