@@ -133,8 +133,6 @@ export default function Home() {
     <main className={styles.container} ref={container}>
       <Header />
       <MobileHeader />
-      {/* Camada de Ruído (Noise) */}
-      <div className={styles.noiseOverlay} />
 
       <div ref={heroRef} className={styles.heroWrapper}>
         <Hero />

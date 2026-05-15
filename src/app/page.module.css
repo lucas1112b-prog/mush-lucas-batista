@@ -33,23 +33,6 @@
   user-select: none;
 }
 
-.noiseOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('/noise.gif');
-  background-repeat: repeat;
-  background-size: contain;
-  z-index: 100;
-  /* No topo de tudo, mas invisível a cliques */
-  pointer-events: none;
-  /* Garante que o ruído não bloqueie cliques */
-  opacity: 0.02;
-  /* Valor sutil para o efeito de grão */
-}
-
 .about1Wrapper {
   width: 100%;
   position: relative;
